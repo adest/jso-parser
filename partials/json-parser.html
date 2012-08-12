@@ -1,0 +1,59 @@
+<div class="span3">
+	<form id="form-jso-input" ng-submit="parse(jsoInput)">
+		<button id="btn-jso-input" ng-click="parse(jsoInput)">parse me</button>
+		<textarea 	id="jso-input" ng-model="jsoInput"
+					placeholder="Type some jso here!"
+					rows="20" style="width: 100%"></textarea>
+	</form>
+</div>
+<div class="span9">
+	<div class="hero-unit">
+		<h1>JSON local parser</h1>
+		<p>try it, it can help sometimes</p>
+		<p>or you can use samples jsos with the following button</p>
+		<div class="btn-group">
+		    <div class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Samples<span class="caret"></span></div>
+		    <ul class="dropdown-menu">
+		    	<!-- dropdown menu links -->
+		    	<li><a ng-click="sample1()">sample1</a></li>
+		    </ul>
+	    </div>
+	</div>
+	<div>
+		<input type="text" ng-model="searchLabel" />
+		<button ng-click="search()">search</div>
+		<ul>
+			<li ng-repeat="properties in jsoDisplay"
+				collapse title="{{properties.name}}:" is-leaf="{{!properties.hasChild}}">
+
+				<ng-include src="'tree_item_renderer.html'" />
+			</li>
+		</ul>
+	</div>
+</div>
+<script type="text/ng-template"  id="tree_item_renderer.html">
+	<ng-switch on="properties.found">
+		<span ng-switch-when="true" class="label label-success">Found</span>
+	</ng-switch>
+	<ng-switch on="properties.hasChild">
+		<span ng-switch-when="false">{{properties.value}}</span>
+		<ul ng-switch-when="true">
+			<li ng-repeat="properties in properties.obj" 
+				collapse title="{{properties.name}}:" is-leaf="{{!properties.hasChild}}">
+
+				<ng-include src="'tree_item_renderer.html'" />
+			</li>
+		</ul>
+	</ng-switch>
+</script>
+<script type="text/javascript">
+<!--
+	jQuery("#jso-input").keypress(function(evt) {
+    	if (evt.keyCode == 13 && evt.shiftKey == false) { // enter key and not shift + enter key
+        	jQuery("#form-jso-input").submit();
+        	evt.preventDefault();
+        }
+    });
+    jQuery("#btn-jso-input").toggle();
+// -->
+</script>
