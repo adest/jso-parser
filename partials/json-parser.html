@@ -20,8 +20,10 @@
 	    </div>
 	</div>
 	<div>
-		<input type="text" ng-model="searchLabel" />
-		<button ng-click="search()" class="btn">search</div>
+		<form class="form-inline">
+			<input type="text" ng-model="searchLabel" class="input-medium"/>
+			<button ng-click="search()" class="btn">search</div>
+		</form>
 		<ul>
 			<li ng-repeat="properties in jsoDisplay"
 				collapse title="{{properties.name}}:" is-leaf="{{!properties.hasChild}}">
