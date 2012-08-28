@@ -7,4 +7,5 @@
 // In this case it is a simple value service.
 angular.module('myApp.services', []).
   value('appName', 'WebTools').
-  value('version', '0.1');
+  value('version', '0.1').
+  value('jsbeautify', JsBeautifyFactory);

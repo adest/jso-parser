@@ -5,6 +5,7 @@
 					placeholder="Type some jso here!"
 					rows="20" style="width: 100%"></textarea>
 	</form>
+	<button ng-click="clipboard()">copy valid json in clipboard</button>
 </div>
 <div class="span9">
 	<div class="hero-unit">
@@ -22,13 +23,20 @@
 	<div>
 		<input type="text" ng-model="searchLabel" />
 		<button ng-click="search()" class="btn">search</div>
-		<ul>
-			<li ng-repeat="properties in jsoDisplay"
-				collapse title="{{properties.name}}:" is-leaf="{{!properties.hasChild}}">
+		<div name="view-hierarchical" class="span5">
+			<ul>
+				<li ng-repeat="properties in jsoDisplay"
+					collapse title="{{properties.name}}:" is-leaf="{{!properties.hasChild}}">
 
-				<ng-include src="'tree_item_renderer.html'" />
-			</li>
-		</ul>
+					<ng-include src="'tree_item_renderer.html'" />
+				</li>
+			</ul>
+		</div>
+		<div name="view-json" class="span5">
+			<textarea 	ng-model="json"
+					readonly="readonly"
+					rows="10" style="width: 100%"></textarea>
+		</div>
 	</div>
 </div>
 <script type="text/ng-template"  id="tree_item_renderer.html">

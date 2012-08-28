@@ -3,11 +3,12 @@
 /* Controllers */
 
 
-function JsonParserCtrl($scope) {
+function JsonParserCtrl($scope, jsbeautify) {
 	$scope.searchLabel = '';
 	$scope.jsoInput = '';
 	$scope.jso = {};
 	$scope.jsoDisplay = [];
+	$scope.json = {};
 
 	$scope.sample1 = function() {
 		var jsoString = "{toto: {titi: {tutu1:85, tutu2:'text', tutu3: 4}}}";
@@ -21,6 +22,10 @@ function JsonParserCtrl($scope) {
 			var obj = jsonFunction();
 			$scope.jso = obj;
 			$scope.jsoDisplay = _jsonify(obj);
+			$scope.json = js_beautify(JSON.stringify(obj), {
+	      'indent_size': 2,
+	      'indent_char': ' '
+	    });
 		} catch(err) {
 			_clearModel();
 			throw err;
@@ -29,6 +34,11 @@ function JsonParserCtrl($scope) {
 	$scope.search = function () {
 		var search = $scope.searchLabel;
 		_search($scope.jsoDisplay, search);
+	}
+	$scope.clipboard = function() {
+		if (window.clipboardData && clipboardData.setData) {
+        clipboardData.setData('text', JSON.stringify($scope.jso));
+    }
 	}
 
 	// privates
@@ -92,7 +102,7 @@ function JsonParserCtrl($scope) {
 		return text.indexOf(search) != -1;
 	}
 }
-JsonParserCtrl.$inject = ['$scope'];
+JsonParserCtrl.$inject = ['$scope', 'jsbeautify'];
 
 
 function NextProjectCtrl($scope) {
